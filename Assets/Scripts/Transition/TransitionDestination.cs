@@ -10,7 +10,8 @@ public enum DestinationTag
     ENTER,  //³¡¾°Èë¿Ú
     A,
     B,
-    C
+    C,
+    D
 }
 
 public class TransitionDestination : MonoBehaviour

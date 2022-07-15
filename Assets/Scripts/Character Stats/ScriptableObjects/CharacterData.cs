@@ -15,9 +15,13 @@ public class CharacterData : ScriptableObject
 
     public float runSpeed;
     public float jumpForce;
-    public int maxAirJumpNum;        //最大可跳跃次数（n段跳）
+    public int maxAirJumpNum;        //空中最大可跳跃次数（n段跳）
     public float rollSpeed;
     public float climbSpeed;
+
+    [Header("Item Info")]
+
+    public int coinNumber;   //coin数量
 
     [Header("Kill Point")]
 

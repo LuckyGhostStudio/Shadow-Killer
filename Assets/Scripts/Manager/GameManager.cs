@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public CharacterStats playerStats;
+    public CharacterStats playerStats;  //Player的数据
 
-    List<IEndGameObserver> endGameObservers = new List<IEndGameObserver>();
+    public CinemachineVirtualCamera followCamera;   //跟随Player的相机 
+
+    List<IEndGameObserver> endGameObservers = new List<IEndGameObserver>();     //所有观察者
+
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(this);    //加载场景时不销毁this
+    }
 
     /// <summary>
     /// 将Player的数据注册到GameManeger
@@ -15,6 +24,13 @@ public class GameManager : Singleton<GameManager>
     public void RegisterPlayer(CharacterStats player)
     {
         playerStats = player;
+
+        followCamera = FindObjectOfType<CinemachineVirtualCamera>();    //查找场景中的CinemachineVirtualCamera
+
+        if (followCamera != null)
+        {
+            followCamera.Follow = playerStats.transform;    //跟随对象为Player
+        }
     }
 
     /// <summary>
@@ -48,5 +64,19 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("GameOver");
         //暂停游戏等其他操作
         //跳出游戏结束界面
+    }
+
+    /// <summary>
+    /// 获得入口：Player出生点
+    /// </summary>
+    /// <returns></returns>
+    public Transform GetEntrance()
+    {
+        foreach (var item in FindObjectsOfType<TransitionDestination>())
+        {
+            if (item.destinationTag == DestinationTag.ENTER) return item.transform;     //目标点Tag为ENTER
+        }
+
+        return null;
     }
 }

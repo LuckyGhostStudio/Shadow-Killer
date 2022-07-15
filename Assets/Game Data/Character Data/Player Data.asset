@@ -21,6 +21,7 @@ MonoBehaviour:
   maxAirJumpNum: 0
   rollSpeed: 1200
   climbSpeed: 200
+  coinNumber: 0
   killPoint: 0
   currentLevel: 1
   maxLevel: 30

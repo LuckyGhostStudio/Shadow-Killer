@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
-    //public static PlayerController instance;
-
     public CharacterStats playerStats;     //Player的数据
 
     [Header("Player组件")]
@@ -107,6 +105,8 @@ public class PlayerController : Singleton<PlayerController>
         rollSpeed = playerStats.characterData.rollSpeed;
         climbSpeed = playerStats.characterData.climbSpeed;
 
+        coinNumber = playerStats.characterData.coinNumber;
+
         attackRange = playerStats.attackData.attackRange;
         coolDown = playerStats.attackData.coolDown;
         maxDamage = playerStats.attackData.maxDamage;
@@ -116,9 +116,14 @@ public class PlayerController : Singleton<PlayerController>
         lastAttackTime = -1;
     }
 
-    void Start()
+    private void OnEnable()
     {
         GameManager.Instance.RegisterPlayer(playerStats);   //将Player的数据传到GameManager
+    }
+
+    void Start()
+    {
+        SaveManager.Instance.LoadPlayerData();  //加载Player的数据
     }
 
     private void Update()
@@ -406,11 +411,12 @@ public class PlayerController : Singleton<PlayerController>
 
     public void SetCoinNumber(int count)
     {
-        this.coinNumber = count;
+        coinNumber = count;
+        playerStats.characterData.coinNumber = coinNumber;
     }
 
     public int GetCoinNumber()
     {
-        return this.coinNumber;
+        return coinNumber;
     }
 }

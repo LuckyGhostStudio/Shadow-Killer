@@ -27,6 +27,7 @@ public class TransitionPoint : MonoBehaviour
         if(canTrans && Input.GetKeyDown(KeyCode.E))
         {
             //传送
+            SceneController.Instance.TransitionToDestination(this);     //传送（当前对象所在点为起点）
         }
     }
 
