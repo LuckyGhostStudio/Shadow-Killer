@@ -36,6 +36,6 @@ public class CoinController : MonoBehaviour
     {
         //先销毁再计算数量，避免数量重复计算
         Destroy(gameObject);
-        PlayerController.Instance.SetCoinNumber(PlayerController.Instance.GetCoinNumber() + 1);   //Coin个数+1
+        GameManager.Instance.playerStats.characterData.coinNumber++;    //Coin个数+1
     }
 }

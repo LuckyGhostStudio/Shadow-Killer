@@ -385,7 +385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07f62eb5ffd449a033b58878a5660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -429,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b6ff81060555a40b64360d6de1b711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  templateData: {fileID: 0}
+  templateData: {fileID: 11400000, guid: 731baab3218314f4f8a8cf5cd29ea519, type: 2}
   characterData: {fileID: 11400000, guid: 731baab3218314f4f8a8cf5cd29ea519, type: 2}
   attackData: {fileID: 11400000, guid: 8fde412c162c06346b67680bf6ba33ff, type: 2}
   isCritical: 0

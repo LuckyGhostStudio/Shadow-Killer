@@ -3,15 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneController : Singleton<SceneController>
+public class SceneController : Singleton<SceneController>, IEndGameObserver
 {
     public GameObject playerPrefab;
+
+    public SceneFader sceneFaderPrefab; //场景渐入渐出Prefab
+
     private GameObject player;
+
+    private bool fadeFinished;
 
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(this);    //加载场景时不销毁this
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.AddObservers(this);    //将this添加到观察者列表
+        fadeFinished = true;
     }
 
     /// <summary>
@@ -107,13 +118,19 @@ public class SceneController : Singleton<SceneController>
     /// <returns></returns>
     IEnumerator LoadLevel(string sceneName)
     {
+        SceneFader sceneFader = Instantiate(sceneFaderPrefab);
+
         if (sceneName != "")
         {
+            yield return StartCoroutine(sceneFader.FadeOut(2));  //场景渐出效果
+
             yield return SceneManager.LoadSceneAsync(sceneName);    //加载场景
             yield return player = Instantiate(playerPrefab, GameManager.Instance.GetEntrance().position, GameManager.Instance.GetEntrance().rotation);  //在出生点生成Player
 
             //保存数据
             SaveManager.Instance.SavePlayerData();
+
+            yield return StartCoroutine(sceneFader.FadeIn(2));  //场景渐入效果
 
             yield break;    //结束协程
         }
@@ -125,7 +142,21 @@ public class SceneController : Singleton<SceneController>
     /// <returns></returns>
     IEnumerator LoadMain()
     {
-        yield return SceneManager.LoadSceneAsync("MainMenu");
+        SceneFader sceneFader = Instantiate(sceneFaderPrefab);
+
+        yield return StartCoroutine(sceneFader.FadeOut(2));  //场景渐出效果
+        yield return SceneManager.LoadSceneAsync("MainMenu");   //加载主场景
+        yield return StartCoroutine(sceneFader.FadeIn(2));  //场景渐入效果
+
         yield break;
+    }
+
+    public void EndNotify() //游戏结束通知
+    {
+        //if (fadeFinished)
+        //{
+        //    fadeFinished = false;
+        //    StartCoroutine(LoadMain());
+        //}
     }
 }

@@ -706,7 +706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 833508759717931715, guid: 78808318b2e7d554f9570d51813f5979, type: 3}
       propertyPath: destinationTag
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 833508759717931715, guid: 78808318b2e7d554f9570d51813f5979, type: 3}
       propertyPath: transitionType

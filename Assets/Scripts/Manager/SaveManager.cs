@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SaveManager : Singleton<SaveManager>
 {
-    private string sceneName = "";
+    private string sceneName = "level";
 
     public string SceneName { get { return PlayerPrefs.GetString(sceneName); } }
 
@@ -36,6 +36,7 @@ public class SaveManager : Singleton<SaveManager>
     public void SavePlayerData()
     {
         Save(GameManager.Instance.playerStats.characterData, GameManager.Instance.playerStats.characterData.name);
+        //TODO:添加保存Player位置信息、场景中的敌人信息、物品信息等
     }
 
     public void LoadPlayerData()

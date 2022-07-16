@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUIController : MonoBehaviour
+public class SceneUI : MonoBehaviour
 {
     private Image healthBar;            //血条
     private Image expBar;               //经验条
@@ -13,16 +13,25 @@ public class PlayerUIController : MonoBehaviour
     private Text coinNumberTextShadow;  //Coin数量Text的Shadow
     private Text levelText;             //等级Text
 
+    private Button pauseButton;         //暂停按钮
+    private GameObject pausePanel;     //暂停菜单
+
+    private bool isPause;
     
     void Awake()
     {
-        healthBar = transform.GetChild(0).GetChild(1).GetComponent<Image>();
-        healthText = transform.GetChild(0).GetChild(3).GetComponent<Text>();
-        expBar = transform.GetChild(1).GetChild(1).GetComponent<Image>();
+        healthBar = transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>();
+        healthText = transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Text>();
+        expBar = transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Image>();
         //expText = transform.GetChild(1).GetChild(3).GetComponent<Text>();
-        coinNumberText = transform.GetChild(3).GetChild(2).GetComponent<Text>();
-        coinNumberTextShadow = transform.GetChild(3).GetChild(1).GetComponent<Text>();
-        levelText = transform.GetChild(2).GetChild(1).GetChild(0).GetComponent<Text>();
+        coinNumberText = transform.GetChild(0).GetChild(3).GetChild(2).GetComponent<Text>();
+        coinNumberTextShadow = transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<Text>();
+        levelText = transform.GetChild(0).GetChild(2).GetChild(1).GetChild(0).GetComponent<Text>();
+
+        pauseButton = transform.GetChild(1).GetComponent<Button>();
+        pausePanel = transform.GetChild(2).gameObject;
+
+        pauseButton.onClick.AddListener(Pause);
     }
 
     void Update()
@@ -31,6 +40,15 @@ public class PlayerUIController : MonoBehaviour
         UpdateExp();
         UpdateLevel();
         UpdateCoinNumber();
+    }
+
+    /// <summary>
+    /// 暂停游戏
+    /// </summary>
+    private void Pause()
+    {
+        isPause = !isPause;
+        pausePanel.SetActive(isPause);
     }
 
     private void UpdateHealth()

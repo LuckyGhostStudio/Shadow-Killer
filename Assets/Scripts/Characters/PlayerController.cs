@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : Singleton<PlayerController>
 {
-    public CharacterStats playerStats;     //Player的数据
+    private CharacterStats playerStats;     //Player的数据
 
     [Header("Player组件")]
 
@@ -83,6 +84,8 @@ public class PlayerController : Singleton<PlayerController>
         sprite = GetComponent<SpriteRenderer>();
         playerStats = GetComponent<CharacterStats>();
 
+        //Debug.Log("调试"+playerStats.characterData.maxHealth);
+
         originalColor = sprite.color;
         originaMaterial = sprite.material;
         hurtMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/2D Platformer Tileset/Simple UI Pack/Font/Font Material.mat", typeof(Material)) as Material;
@@ -114,6 +117,8 @@ public class PlayerController : Singleton<PlayerController>
         criticalMultiplier = playerStats.attackData.criticalMultiplier;
         criticalChance = playerStats.attackData.criticalChance;
         lastAttackTime = -1;
+
+        Debug.Log("aaa");
     }
 
     private void OnEnable()
@@ -407,16 +412,5 @@ public class PlayerController : Singleton<PlayerController>
         sprite.material = originaMaterial;
         sprite.color = originalColor;
         isHurt = false;
-    }
-
-    public void SetCoinNumber(int count)
-    {
-        coinNumber = count;
-        playerStats.characterData.coinNumber = coinNumber;
-    }
-
-    public int GetCoinNumber()
-    {
-        return coinNumber;
     }
 }
