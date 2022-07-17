@@ -17,10 +17,6 @@ public class SaveManager : Singleton<SaveManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneController.Instance.TransitionToMain();    //回到主场景
-        }
         if (Input.GetKeyDown(KeyCode.S))
         {
             SavePlayerData();

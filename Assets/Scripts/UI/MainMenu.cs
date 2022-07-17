@@ -10,6 +10,14 @@ public class MainMenu : MonoBehaviour
     private Button authorButton;
     private Button quitButton;
 
+    private GameObject quitPanel;       //Quit确认面板
+    private Button quitCancelButton;
+    private Button quitOKButton;
+
+    private GameObject newGamePanel;       //NewGame确认面板
+    private Button newGameCancelButton;
+    private Button newGameOKButton;
+
     private void Awake()
     {
         newGameButton = transform.GetChild(1).GetComponent<Button>();
@@ -17,10 +25,36 @@ public class MainMenu : MonoBehaviour
         authorButton = transform.GetChild(3).GetComponent<Button>();
         quitButton = transform.GetChild(4).GetComponent<Button>();
 
-        newGameButton.onClick.AddListener(NewGame);
+        quitPanel = transform.GetChild(6).gameObject;
+        quitCancelButton = transform.GetChild(6).GetChild(1).GetComponent<Button>();
+        quitOKButton = transform.GetChild(6).GetChild(2).GetComponent<Button>();
+
+        newGamePanel = transform.GetChild(7).gameObject;
+        newGameCancelButton = transform.GetChild(7).GetChild(1).GetComponent<Button>();
+        newGameOKButton = transform.GetChild(7).GetChild(2).GetComponent<Button>();
+
+        //添加监听事件
+        //四个主要按钮
+        newGameButton.onClick.AddListener(OpenNewGamePanel);
         continueButton.onClick.AddListener(ContinueGame);
         authorButton.onClick.AddListener(AboutAuthor);
-        quitButton.onClick.AddListener(QuitGame);
+        quitButton.onClick.AddListener(OpenQuitPanel);
+        //确认 取消按钮
+        quitCancelButton.onClick.AddListener(CloseQuitPanel);
+        quitOKButton.onClick.AddListener(QuitGame);
+
+        newGameCancelButton.onClick.AddListener(CloseNewGamePanel);
+        newGameOKButton.onClick.AddListener(NewGame);
+    }
+
+    private void OpenNewGamePanel()
+    {
+        newGamePanel.SetActive(true);
+    }
+
+    private void CloseNewGamePanel()
+    {
+        newGamePanel.SetActive(false);
     }
 
     private void NewGame()
@@ -40,6 +74,16 @@ public class MainMenu : MonoBehaviour
     private void AboutAuthor()
     {
         //查看作者
+    }
+
+    private void OpenQuitPanel()
+    {
+        quitPanel.SetActive(true);
+    }
+
+    private void CloseQuitPanel()
+    {
+        quitPanel.SetActive(false);
     }
 
     private void QuitGame()
