@@ -5,46 +5,68 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    [Header("Main Button")]
     private Button newGameButton;
     private Button continueButton;
     private Button authorButton;
     private Button quitButton;
 
+    [Header("Quit UI")]
     private GameObject quitPanel;       //Quit确认面板
     private Button quitCancelButton;
     private Button quitOKButton;
 
+    [Header("NewGame UI")]
     private GameObject newGamePanel;       //NewGame确认面板
     private Button newGameCancelButton;
     private Button newGameOKButton;
 
+    [Header("Author UI")]
+    private GameObject authorPanel;     //Author界面
+    private Button authorBackButton;
+
+    private bool authorOpen;
+
     private void Awake()
     {
+        //Main Button
         newGameButton = transform.GetChild(1).GetComponent<Button>();
         continueButton = transform.GetChild(2).GetComponent<Button>();
         authorButton = transform.GetChild(3).GetComponent<Button>();
         quitButton = transform.GetChild(4).GetComponent<Button>();
 
+        //Quit UI
         quitPanel = transform.GetChild(6).gameObject;
         quitCancelButton = transform.GetChild(6).GetChild(1).GetComponent<Button>();
         quitOKButton = transform.GetChild(6).GetChild(2).GetComponent<Button>();
 
+        //NewGame UI
         newGamePanel = transform.GetChild(7).gameObject;
         newGameCancelButton = transform.GetChild(7).GetChild(1).GetComponent<Button>();
         newGameOKButton = transform.GetChild(7).GetChild(2).GetComponent<Button>();
 
+        //Author UI
+        authorPanel = transform.GetChild(8).gameObject;
+        authorBackButton = authorPanel.transform.GetChild(4).GetComponent<Button>();
+
         //添加监听事件
-        //四个主要按钮
-        newGameButton.onClick.AddListener(OpenNewGamePanel);
+
+        //Main Button
+        //newGameButton.onClick.AddListener(OpenNewGamePanel);
+        newGameButton.onClick.AddListener(NewGame);
         continueButton.onClick.AddListener(ContinueGame);
         authorButton.onClick.AddListener(AboutAuthor);
         quitButton.onClick.AddListener(OpenQuitPanel);
-        //确认 取消按钮
+
+        //Quit UI
         quitCancelButton.onClick.AddListener(CloseQuitPanel);
         quitOKButton.onClick.AddListener(QuitGame);
 
+        //NewGame UI
         newGameCancelButton.onClick.AddListener(CloseNewGamePanel);
         newGameOKButton.onClick.AddListener(NewGame);
+
+        authorBackButton.onClick.AddListener(AboutAuthor);
     }
 
     private void OpenNewGamePanel()
@@ -74,6 +96,9 @@ public class MainMenu : MonoBehaviour
     private void AboutAuthor()
     {
         //查看作者
+        authorOpen = !authorOpen;
+        Debug.Log(authorOpen);
+        authorPanel.SetActive(authorOpen);
     }
 
     private void OpenQuitPanel()

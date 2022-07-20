@@ -22,20 +22,19 @@ public class SceneFader : MonoBehaviour
     /// <returns></returns>
     public IEnumerator FadeOutIn()
     {
-        yield return FadeOut(fadeOutDuration);
-        yield return FadeIn(fadeInDuration);
+        yield return FadeOut();
+        yield return FadeIn();
     }
 
     /// <summary>
     /// 渐出
     /// </summary>
-    /// <param name="time">持续时间</param>
     /// <returns></returns>
-    public IEnumerator FadeOut(float time)
+    public IEnumerator FadeOut()
     {
         while (canvasGroup.alpha < 1)
         {
-            canvasGroup.alpha += Time.deltaTime / time;     //增加alpha值
+            canvasGroup.alpha += Time.deltaTime / fadeOutDuration;     //增加alpha值
             yield return null;
         }
     }
@@ -43,13 +42,12 @@ public class SceneFader : MonoBehaviour
     /// <summary>
     /// 渐入
     /// </summary>
-    /// <param name="time">持续时间</param>
     /// <returns></returns>
-    public IEnumerator FadeIn(float time)
+    public IEnumerator FadeIn()
     {
         while (canvasGroup.alpha != 0)
         {
-            canvasGroup.alpha -= Time.deltaTime / time;     //减小alpha值
+            canvasGroup.alpha -= Time.deltaTime / fadeInDuration;     //减小alpha值
             yield return null;
         }
 

@@ -172,10 +172,11 @@ MonoBehaviour:
   speed: 0
   runSpeed: 300
   lastAttackTime: 0
-  impactEffectPrefab: {fileID: 0}
+  damageFloatEffectPrefab: {fileID: 7649529949366036012, guid: 51ce3449bf6bb424cbcef8da7f52a943, type: 3}
+  impactEffectPrefab: {fileID: 2214323922104603358, guid: d831a277690894740bdabff9771c4cd0, type: 3}
   hurtTime: 0.2
   originaMaterial: {fileID: 0}
-  hurtMaterial: {fileID: 0}
+  hurtMaterial: {fileID: 2100000, guid: 62fadec409cb24841a1756f78f8873b2, type: 2}
 --- !u!114 &2050281011801843326
 MonoBehaviour:
   m_ObjectHideFlags: 0

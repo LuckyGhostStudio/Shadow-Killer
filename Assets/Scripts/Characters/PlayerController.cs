@@ -84,11 +84,9 @@ public class PlayerController : Singleton<PlayerController>
         sprite = GetComponent<SpriteRenderer>();
         playerStats = GetComponent<CharacterStats>();
 
-        //Debug.Log("调试"+playerStats.characterData.maxHealth);
-
         originalColor = sprite.color;
         originaMaterial = sprite.material;
-        hurtMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/2D Platformer Tileset/Simple UI Pack/Font/Font Material.mat", typeof(Material)) as Material;
+        //hurtMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/2D Platformer Tileset/Simple UI Pack/Font/Font Material.mat", typeof(Material)) as Material;
 
         InitStats();    //初始化各参数
     }
@@ -117,8 +115,6 @@ public class PlayerController : Singleton<PlayerController>
         criticalMultiplier = playerStats.attackData.criticalMultiplier;
         criticalChance = playerStats.attackData.criticalChance;
         lastAttackTime = -1;
-
-        Debug.Log("aaa");
     }
 
     private void OnEnable()
@@ -139,7 +135,7 @@ public class PlayerController : Singleton<PlayerController>
         {
             Dead(); //死亡
         }
-        else
+        else if (!SceneUI.Instance.pause) 
         {
             if (lastAttackTime >= 0) lastAttackTime -= Time.deltaTime;
 
@@ -156,7 +152,7 @@ public class PlayerController : Singleton<PlayerController>
 
     void FixedUpdate()
     {
-        if (!isDead)
+        if (!isDead && !SceneUI.Instance.pause)
         {
             PhysicCheck();
 
@@ -188,7 +184,6 @@ public class PlayerController : Singleton<PlayerController>
     /// </summary>
     private void Move()
     {
-        //float horizontal = Input.GetAxis("Horizontal");
         horizontal = Input.GetAxis("Horizontal");
 
         if (horizontal != 0)
@@ -356,18 +351,6 @@ public class PlayerController : Singleton<PlayerController>
             InjuredFlash();     //受伤闪烁
             InjuredBack(collision.gameObject.transform.parent.position);  //受伤被击退
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //if (collision.CompareTag("Spike"))   //踩到Spike
-        //{
-        //    CharacterStats attackerStats = collision.gameObject.GetComponent<CharacterStats>();
-        //    playerStats.TakeDamage(attackerStats, playerStats);   //计算伤害，计算被攻击者当前血量
-
-        //    InjuredFlash();     //受伤闪烁
-        //    InjuredBack(collision.gameObject.transform.parent.position);  //受伤被击退
-        //}
     }
 
     private void OnTriggerStay2D(Collider2D collision)

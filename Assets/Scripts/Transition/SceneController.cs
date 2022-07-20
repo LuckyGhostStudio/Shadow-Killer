@@ -11,7 +11,7 @@ public class SceneController : Singleton<SceneController>, IEndGameObserver
 
     private GameObject player;
 
-    private bool fadeFinished;
+    //private bool fadeFinished;
 
     protected override void Awake()
     {
@@ -22,7 +22,7 @@ public class SceneController : Singleton<SceneController>, IEndGameObserver
     private void Start()
     {
         GameManager.Instance.AddObservers(this);    //将this添加到观察者列表
-        fadeFinished = true;
+        //fadeFinished = true;
     }
 
     /// <summary>
@@ -50,6 +50,9 @@ public class SceneController : Singleton<SceneController>, IEndGameObserver
     /// <returns></returns>
     IEnumerator Transition(string sceneName, DestinationTag destinationTag)
     {
+        //SceneFader sceneFader = Instantiate(sceneFaderPrefab);
+        //yield return StartCoroutine(sceneFader.FadeOut());  //场景渐出效果
+
         //TODO:保存数据
         SaveManager.Instance.SavePlayerData();  //保存Player数据
 
@@ -60,14 +63,21 @@ public class SceneController : Singleton<SceneController>, IEndGameObserver
 
             SaveManager.Instance.LoadPlayerData();  //读取Player数据
 
+           // yield return StartCoroutine(sceneFader.FadeIn());  //场景渐入效果
+
             yield break;
         }
         else  //相同场景
         {
             player = GameManager.Instance.playerStats.gameObject;
             player.transform.SetPositionAndRotation(GetDestination(destinationTag).transform.position, GetDestination(destinationTag).transform.rotation);  //设置Player位置和旋转
+
+            //yield return StartCoroutine(sceneFader.FadeIn());  //场景渐入效果
+
             yield return null;
         }
+
+       
     }
 
     /// <summary>
@@ -118,11 +128,11 @@ public class SceneController : Singleton<SceneController>, IEndGameObserver
     /// <returns></returns>
     IEnumerator LoadLevel(string sceneName)
     {
-        SceneFader sceneFader = Instantiate(sceneFaderPrefab);
+        //SceneFader sceneFader = Instantiate(sceneFaderPrefab);
 
         if (sceneName != "")
         {
-            yield return StartCoroutine(sceneFader.FadeOut(2));  //场景渐出效果
+            //yield return StartCoroutine(sceneFader.FadeOut());  //场景渐出效果
 
             yield return SceneManager.LoadSceneAsync(sceneName);    //加载场景
             yield return player = Instantiate(playerPrefab, GameManager.Instance.GetEntrance().position, GameManager.Instance.GetEntrance().rotation);  //在出生点生成Player
@@ -130,7 +140,7 @@ public class SceneController : Singleton<SceneController>, IEndGameObserver
             //保存数据
             SaveManager.Instance.SavePlayerData();
 
-            yield return StartCoroutine(sceneFader.FadeIn(2));  //场景渐入效果
+            //yield return StartCoroutine(sceneFader.FadeIn());  //场景渐入效果
 
             yield break;    //结束协程
         }
@@ -142,11 +152,11 @@ public class SceneController : Singleton<SceneController>, IEndGameObserver
     /// <returns></returns>
     IEnumerator LoadMain()
     {
-        SceneFader sceneFader = Instantiate(sceneFaderPrefab);
+        //SceneFader sceneFader = Instantiate(sceneFaderPrefab);
 
-        yield return StartCoroutine(sceneFader.FadeOut(2));  //场景渐出效果
+        //yield return StartCoroutine(sceneFader.FadeOut());  //场景渐出效果
         yield return SceneManager.LoadSceneAsync("MainMenu");   //加载主场景
-        yield return StartCoroutine(sceneFader.FadeIn(2));  //场景渐入效果
+        //yield return StartCoroutine(sceneFader.FadeIn());  //场景渐入效果
 
         yield break;
     }

@@ -85,11 +85,11 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
         guardFaceTo = (int)transform.localScale.x;  //警戒时面朝向
         remainLookAtTime = lookAtTime;  //初始化等待时间
 
-        damageFloatEffectPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/DamageFloatBase.prefab", typeof(GameObject)) as GameObject;
-        impactEffectPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/impact.prefab", typeof(GameObject)) as GameObject;
+        //damageFloatEffectPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/DamageFloatBase.prefab", typeof(GameObject)) as GameObject;
+        //impactEffectPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/impact.prefab", typeof(GameObject)) as GameObject;
         originalColor = sprite.color;
         originaMaterial = sprite.material;
-        hurtMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/2D Platformer Tileset/Simple UI Pack/Font/Font Material.mat", typeof(Material)) as Material;
+        //hurtMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/2D Platformer Tileset/Simple UI Pack/Font/Font Material.mat", typeof(Material)) as Material;
 
         InitStats();
     }
@@ -152,9 +152,12 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
             isDead = true;
         }
 
-        SwicthStates();
+        if (!SceneUI.Instance.pause)
+        {
+            SwicthStates();
+            if (lastAttackTime >= 0) lastAttackTime -= Time.deltaTime;
+        }
         SwitchAnimations();
-        if (lastAttackTime >= 0) lastAttackTime -= Time.deltaTime;
     }
 
     /// <summary>

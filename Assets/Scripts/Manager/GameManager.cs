@@ -61,9 +61,9 @@ public class GameManager : Singleton<GameManager>
 
     public void GameOver()
     {
-        Debug.Log("GameOver");
         //暂停游戏等其他操作
         //跳出游戏结束界面
+        SceneUI.Instance.Defeat();  //战败界面
     }
 
     /// <summary>

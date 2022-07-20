@@ -415,7 +415,7 @@ MonoBehaviour:
   onGround: 0
   hurtTime: 0.15
   originaMaterial: {fileID: 0}
-  hurtMaterial: {fileID: 0}
+  hurtMaterial: {fileID: 2100000, guid: 62fadec409cb24841a1756f78f8873b2, type: 2}
 --- !u!114 &2124948205074803312
 MonoBehaviour:
   m_ObjectHideFlags: 0

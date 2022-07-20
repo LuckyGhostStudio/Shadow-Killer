@@ -13,14 +13,14 @@ public enum TransitionType
 
 public class TransitionPoint : MonoBehaviour
 {
-    public GameObject tipsDialogPanel;     //提示对话框
-
     [Header("Transition Info")]
     public string sceneName;
     public TransitionType transitionType;
     public DestinationTag destinationTag;
 
     private bool canTrans;  //能否传送
+
+
 
     private void Update()
     {
@@ -36,7 +36,7 @@ public class TransitionPoint : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             canTrans = true;
-            tipsDialogPanel.gameObject.SetActive(canTrans);
+            SceneUI.Instance.SetTipsDialog(canTrans);
         }
     }
 
@@ -45,7 +45,7 @@ public class TransitionPoint : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             canTrans = false;
-            tipsDialogPanel.gameObject.SetActive(canTrans);
+            SceneUI.Instance.SetTipsDialog(canTrans);
         }
     }
 }

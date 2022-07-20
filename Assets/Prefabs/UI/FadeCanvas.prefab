@@ -201,5 +201,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a0da5c21f5eb64b85ead17b2577346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeInDuration: 2
-  fadeOutDuration: 2
+  fadeInDuration: 1
+  fadeOutDuration: 1
