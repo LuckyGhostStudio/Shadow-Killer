@@ -52,8 +52,8 @@ public class MainMenu : MonoBehaviour
         //Ìí¼Ó¼àÌýÊÂ¼þ
 
         //Main Button
-        //newGameButton.onClick.AddListener(OpenNewGamePanel);
-        newGameButton.onClick.AddListener(NewGame);
+        newGameButton.onClick.AddListener(OpenNewGamePanel);
+        //newGameButton.onClick.AddListener(NewGame);
         continueButton.onClick.AddListener(ContinueGame);
         authorButton.onClick.AddListener(AboutAuthor);
         quitButton.onClick.AddListener(OpenQuitPanel);
