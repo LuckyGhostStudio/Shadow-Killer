@@ -74,9 +74,12 @@ public class PlayerController : Singleton<PlayerController>
     {
         base.Awake();
 
-        swordAttackCheckBox1 = transform.GetChild(1).GetComponent<PolygonCollider2D>();
-        swordAttackCheckBox2 = transform.GetChild(2).GetComponent<PolygonCollider2D>();
-        swordAttackCheckBox3 = transform.GetChild(3).GetComponent<PolygonCollider2D>();
+        if (isAggressive)   //有武器
+        {
+            swordAttackCheckBox1 = transform.GetChild(1).GetComponent<PolygonCollider2D>();
+            swordAttackCheckBox2 = transform.GetChild(2).GetComponent<PolygonCollider2D>();
+            swordAttackCheckBox3 = transform.GetChild(3).GetComponent<PolygonCollider2D>();
+        }
 
         groundCheck = transform.GetChild(0).GetComponent<Transform>();
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -119,11 +122,14 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnEnable()
     {
-        GameManager.Instance.RegisterPlayer(playerStats);   //将Player的数据传到GameManager
+        //GameManager.Instance.RegisterPlayer(playerStats);   //将Player的数据传到GameManager
     }
 
     void Start()
     {
+        //测试时先放在Start里
+        GameManager.Instance.RegisterPlayer(playerStats);   //将Player的数据传到GameManager
+
         SaveManager.Instance.LoadPlayerData();  //加载Player的数据
     }
 
@@ -139,7 +145,8 @@ public class PlayerController : Singleton<PlayerController>
         {
             if (lastAttackTime >= 0) lastAttackTime -= Time.deltaTime;
 
-            Attack();   //攻击
+            if(isAggressive)    //有武器
+                Attack();   //攻击
             
             if (!isHurt)
             {
@@ -349,7 +356,9 @@ public class PlayerController : Singleton<PlayerController>
             playerStats.TakeDamage(attackerStats, playerStats);   //计算伤害，计算被攻击者当前血量
 
             InjuredFlash();     //受伤闪烁
-            InjuredBack(collision.gameObject.transform.parent.position);  //受伤被击退
+
+            if (collision.gameObject != null) 
+                InjuredBack(collision.gameObject.transform.parent.position);  //受伤被击退
         }
     }
 
