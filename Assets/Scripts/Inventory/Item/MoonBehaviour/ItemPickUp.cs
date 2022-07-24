@@ -11,6 +11,9 @@ public class ItemPickUp : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             //将物品添加到背包
+
+            //将地图上的物品删除
+            Destroy(gameObject);
         }
     }
 }

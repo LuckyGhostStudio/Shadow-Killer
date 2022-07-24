@@ -14,22 +14,12 @@ public class PlayerController : Singleton<PlayerController>
     private SpriteRenderer sprite;
     private Transform groundCheck;                      //地面检测Transform
 
-    private PolygonCollider2D swordAttackCheckBox1;          //sword攻击检测collider1
-    private PolygonCollider2D swordAttackCheckBox2;          //sword攻击检测collider2
-    private PolygonCollider2D swordAttackCheckBox3;          //sword攻击检测collider3
-
     [SerializeField] private LayerMask groundLayer;     //地面检测图层
 
     [Header("输入参数")]
     public float horizontal;            //水平输入：A/D <-/->
     public bool jumpPressed;            //跳跃键按下：Space
     public bool rollPressed;            //滚动键按下：C
-
-    [Header("基本参数")]
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
-    [SerializeField] private int baseDefence;     //基础防御
-    [SerializeField] private int currentDefence;  //当前防御
 
     [Header("移动参数")]
     [SerializeField] private float speed;               //当前速度
@@ -39,18 +29,6 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private int currentAirJumpNum;     //当前空中可跳跃次数
     [SerializeField] private float rollSpeed;           //滚动速度
     [SerializeField] private float climbSpeed;          //爬行速度
-
-    [Header("攻击参数")]
-    [SerializeField] private float attackRange;         //攻击范围
-    [SerializeField] private float coolDown;            //冷却时间
-    [SerializeField] private float lastAttackTime;      //上次攻击时间
-    [SerializeField] private int maxDamage;             //最大伤害
-    [SerializeField] private int minDamage;             //最小伤害
-    [SerializeField] private float criticalMultiplier;    //暴击倍率
-    [SerializeField] private float criticalChance;      //暴击率
-    [SerializeField] private bool isCritical;           //是否暴击
-
-    [SerializeField] private int coinNumber = 0;        //金币数量
 
     [Header("状态参数")]
     [SerializeField] private bool isAggressive;         //是否有攻击性：是否有武器，用于判断攻击动画是否可启用
@@ -74,13 +52,6 @@ public class PlayerController : Singleton<PlayerController>
     {
         base.Awake();
 
-        if (isAggressive)   //有武器
-        {
-            swordAttackCheckBox1 = transform.GetChild(1).GetComponent<PolygonCollider2D>();
-            swordAttackCheckBox2 = transform.GetChild(2).GetComponent<PolygonCollider2D>();
-            swordAttackCheckBox3 = transform.GetChild(3).GetComponent<PolygonCollider2D>();
-        }
-
         groundCheck = transform.GetChild(0).GetComponent<Transform>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -97,27 +68,12 @@ public class PlayerController : Singleton<PlayerController>
     //初始化各参数
     void InitStats()
     {
-        maxHealth = playerStats.MaxHealth;
-        currentHealth = playerStats.CurrentHealth;
-        baseDefence = playerStats.BaseDefence;
-        currentDefence = playerStats.CurrentDefence;
-
         runSpeed = playerStats.characterData.runSpeed;
         speed = runSpeed;
         jumpForce = playerStats.characterData.jumpForce;
         maxAirJumpNum = playerStats.characterData.maxAirJumpNum;
         rollSpeed = playerStats.characterData.rollSpeed;
         climbSpeed = playerStats.characterData.climbSpeed;
-
-        coinNumber = playerStats.characterData.coinNumber;
-
-        attackRange = playerStats.attackData.attackRange;
-        coolDown = playerStats.attackData.coolDown;
-        maxDamage = playerStats.attackData.maxDamage;
-        minDamage = playerStats.attackData.minDamage;
-        criticalMultiplier = playerStats.attackData.criticalMultiplier;
-        criticalChance = playerStats.attackData.criticalChance;
-        lastAttackTime = -1;
     }
 
     private void OnEnable()
@@ -143,17 +99,11 @@ public class PlayerController : Singleton<PlayerController>
         }
         else if (!SceneUI.Instance.pause) 
         {
-            if (lastAttackTime >= 0) lastAttackTime -= Time.deltaTime;
-
-            if(isAggressive)    //有武器
-                Attack();   //攻击
-            
             if (!isHurt)
             {
                 Jump();
                 //Roll();
-            }
-               
+            } 
         }
     }
 
@@ -262,86 +212,6 @@ public class PlayerController : Singleton<PlayerController>
             isFall = false;
             isIdle = true;
         }
-    }
-
-    /// <summary>
-    /// 攻击
-    /// </summary>
-    private void Attack()
-    {
-        if (Input.GetKey(KeyCode.J))
-        {
-            //判断是否暴击
-            isCritical = Random.value < criticalChance;      //[0,1]随机取值，取值小于暴击率的概率刚好为暴击率
-            playerStats.isCritical = isCritical;
-
-            if (lastAttackTime < 0)     //冷却结束
-            {
-                animator.SetBool("critical", isCritical);   //触发暴击，暴击动画
-
-                //随机触发两个普通攻击中的一个：各0.5概率
-                if (Random.value > 0.5f)
-                {
-                    animator.SetTrigger("attack1");     //触发attack1
-                    Debug.Log("Attack1");
-                }
-                else
-                {
-                    animator.SetTrigger("attack2");     //触发attack2
-                    Debug.Log("Attack2");
-                }
-
-                lastAttackTime = coolDown;          //重置冷却时间
-            }
-        }
-    }
-
-    /// <summary>
-    /// 启用攻击检测框sword attack1：动画事件
-    /// </summary>
-    public void EnableAttackCheckBox1()
-    {
-        swordAttackCheckBox1.enabled = true;
-    }
-
-    /// <summary>
-    /// 取消启用攻击检测框sword attack1：动画事件
-    /// </summary>
-    public void UnenableAttackCheckBox1()
-    {
-        swordAttackCheckBox1.enabled = false;
-    }
-
-    /// <summary>
-    /// 启用攻击检测框sword attack1：动画事件
-    /// </summary>
-    public void EnableAttackCheckBox2()
-    {
-        swordAttackCheckBox2.enabled = true;
-    }
-
-    /// <summary>
-    /// 取消启用攻击检测框sword attack1：动画事件
-    /// </summary>
-    public void UnenableAttackCheckBox2()
-    {
-        swordAttackCheckBox2.enabled = false;
-    }
-
-    /// <summary>
-    /// 启用攻击检测框sword attack1：动画事件
-    /// </summary>
-    public void EnableAttackCheckBox3()
-    {
-        swordAttackCheckBox3.enabled = true;
-    }
-
-    /// <summary>
-    /// 取消启用攻击检测框sword attack1：动画事件
-    /// </summary>
-    public void UnenableAttackCheckBox3()
-    {
-        swordAttackCheckBox3.enabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

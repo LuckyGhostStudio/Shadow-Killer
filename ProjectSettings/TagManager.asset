@@ -7,6 +7,7 @@ TagManager:
   - PlayerSword
   - Enemy
   - Spike
+  - Item
   layers:
   - Default
   - TransparentFX

@@ -568,7 +568,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: attack1
     m_Type: 9
@@ -754,7 +754,7 @@ AnimatorStateMachine:
     m_Position: {x: -60, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1437923895403927265}
-    m_Position: {x: -90, y: 200, z: 0}
+    m_Position: {x: -90, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1935810451363785396}
     m_Position: {x: -60, y: 20, z: 0}
