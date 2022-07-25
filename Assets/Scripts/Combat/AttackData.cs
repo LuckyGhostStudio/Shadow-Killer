@@ -12,4 +12,18 @@ public class AttackData : ScriptableObject
 
     public float criticalMultiplier;      //暴击倍率
     public float criticalChance;        //暴击率
+
+    /// <summary>
+    /// 应用Weapon数据
+    /// </summary>
+    /// <param name="weapon">weapon的攻击数据</param>
+    public void ApplyWeaponData(AttackData weapon)
+    {
+        attackRange = weapon.attackRange;
+        coolDown = weapon.coolDown;
+        maxDamage = weapon.maxDamage;
+        minDamage = weapon.minDamage;
+        criticalMultiplier = weapon.criticalMultiplier;
+        criticalChance = weapon.criticalChance;
+    }
 }

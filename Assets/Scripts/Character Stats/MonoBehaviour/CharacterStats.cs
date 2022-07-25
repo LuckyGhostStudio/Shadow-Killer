@@ -83,4 +83,14 @@ public class CharacterStats : MonoBehaviour     //角色数据统计
         return (int)damage;
     }
     #endregion
+
+    #region
+    public void EquipWeapon(ItemData weapon)
+    {
+        //更换武器：更换动画
+
+        //更改攻击属性值
+        attackData.ApplyWeaponData(weapon.weaponData);
+    }
+    #endregion
 }

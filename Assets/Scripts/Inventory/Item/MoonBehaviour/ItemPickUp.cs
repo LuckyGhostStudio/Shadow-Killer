@@ -11,7 +11,10 @@ public class ItemPickUp : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             //将物品添加到背包
+            InventoryManager.Instance.inventoryData.AddItem(itemData, itemData.itemAmount);
 
+
+            //GameManager.Instance.playerStats.EquipWeapon(itemData);
             //将地图上的物品删除
             Destroy(gameObject);
         }

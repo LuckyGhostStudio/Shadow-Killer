@@ -18,3 +18,4 @@ MonoBehaviour:
   itemAmount: 1
   description: "\u8FD9\u662F\u4E00\u628A\u666E\u901A\u7684\u5251"
   stackable: 0
+  weaponData: {fileID: 11400000, guid: 0ae38f005c85ef14894d5050da5c1c1d, type: 2}

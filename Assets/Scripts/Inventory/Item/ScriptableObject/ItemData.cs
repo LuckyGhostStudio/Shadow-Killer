@@ -18,4 +18,6 @@ public class ItemData : ScriptableObject
     [TextArea]
     public string description;  //物品描述
     public bool stackable;      //是否是可堆叠的
+
+    public AttackData weaponData;
 }
