@@ -25,13 +25,17 @@ public class SlotHolder : MonoBehaviour
         switch (slotType)
         {
             case SlotType.BAG:
-                itemUI.Bag = InventoryManager.Instance.inventoryData;   //将库存的数据关联到库存UI
+                itemUI.Bag = InventoryManager.Instance.inventoryData;   //将库存的数据关联到背包UI
                 break;
             case SlotType.WEAPON:
+                itemUI.Bag = InventoryManager.Instance.equipmentData;   //将装备栏的数据关联到背包UI
+                break;
+            case SlotType.ACTION:
+                itemUI.Bag = InventoryManager.Instance.actionData;      //将活动栏的数据关联到背包UI
                 break;
         }
 
-        var item = itemUI.Bag.items[itemUI.Index];          //获得库存列表的item
+        var item = itemUI.Bag.items[itemUI.Index];          //获得对应库存列表的item
         itemUI.SetupItemUI(item.itemData, item.amount);     //设置背包物品UI
     }
 }

@@ -8,7 +8,7 @@ public class ItemUI : MonoBehaviour
     public Image icon;      //物品图片
     public Text amount;     //物品数量
 
-    public InventoryData Bag { get; set; }  //库存数据
+    public InventoryData Bag { get; set; }  //对应类型背包数据
     public int Index { get; set; } = -1;    //物品序号（在背包中的序号：在库存列表中的索引）
 
     /// <summary>
